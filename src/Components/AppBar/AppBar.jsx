@@ -1,4 +1,4 @@
-import ModeSelect from "../ModeSelect/index.jsx";
+import ModeSelect from "../ModeSelect/ModeSelect.jsx";
 import {Badge, Box, Button, InputAdornment, TextField, Tooltip, Typography} from "@mui/material";
 import AppsIcon from '@mui/icons-material/Apps';
 import {ReactComponent as TrelloIcon} from '~/assets/trello.svg';

@@ -1,7 +1,7 @@
 import {Container} from "@mui/material";
-import Appbar from "~/Components/AppBar/index.jsx";
-import BoardBar from "./BoardBar/index.jsx";
-import BoardContent from "./BoardContent/index.jsx";
+import Appbar from "~/Components/AppBar/AppBar.jsx";
+import BoardBar from "./BoardBar/BoarBar.jsx";
+import BoardContent from "./BoardContent/BoardContene.jsx";
 
 function Board() {
   return (
