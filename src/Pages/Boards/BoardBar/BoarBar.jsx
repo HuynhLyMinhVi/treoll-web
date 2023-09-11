@@ -8,6 +8,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import {capitalizeFirstLetter} from '~/Utils/formatters.js'
 
 const MENU_STYLE = {
   color: 'white',
@@ -18,7 +19,7 @@ const MENU_STYLE = {
   '& .MuiSvgIcon-root': { color: 'white' },
   '&:hover': { bgColor: 'primary.50' }
 }
-const BoardBar = () => {
+const BoardBar = ({board}) => {
   return (
       <Box px={2} sx={{
         width: "100%",
@@ -31,9 +32,9 @@ const BoardBar = () => {
         backgroundColor: (theme) => ( theme.palette.mode === 'dark' ? '#34495e' : '#1976d2' ),
       }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Chip sx={MENU_STYLE} icon={<DashboardIcon/>} label="HuynhVi dev" onClick={() => {
+          <Chip sx={MENU_STYLE} icon={<DashboardIcon/>} label={board?.title} onClick={() => {
           }}/>
-          <Chip sx={MENU_STYLE} icon={<VpnLockIcon/>} label="Public/Private Workspace" onClick={() => {
+          <Chip sx={MENU_STYLE} icon={<VpnLockIcon/>} label={capitalizeFirstLetter(board?.type)} onClick={() => {
           }}/>
           <Chip sx={MENU_STYLE} icon={<AddToDriveIcon/>} label="Add to google drive" onClick={() => {
           }}/>

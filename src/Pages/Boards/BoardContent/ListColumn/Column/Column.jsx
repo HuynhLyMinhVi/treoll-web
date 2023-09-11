@@ -6,9 +6,28 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DragHandleIcon from "@mui/icons-material/DragHandle";
 import React from "react";
 import ListCards from "~/Pages/Boards/BoardContent/ListColumn/Column/ListCrads/ListCards.jsx";
+import { mapOrder } from '~/Utils/sorts.js'
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
-
-const Column = () => {
+const Column = ({ column }) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+  } = useSortable({
+    id: column._id,
+    data: { ...column }
+  });
+  
+  const dndKitColumnStyles = {
+    touchAction: "none",
+    transform: CSS.Translate.toString(transform),
+    transition
+  };
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -17,18 +36,23 @@ const Column = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const orderedCard = mapOrder(column?.cards, column?.cardOrderIds, '_id')
   return (
-      <Box sx={{
-        minWidth: "300px",
-        maxWidth: "300px",
-        bgcolor: (theme) => ( theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ),
-        ml: 2,
-        borderRadius: "6px",
-        height: "fit-content",
-        maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
-      }}>
+      <Box
+          ref={setNodeRef}
+          style={dndKitColumnStyles}
+          {...attributes} {...listeners}
+          sx={{
+            minWidth: "300px",
+            maxWidth: "300px",
+            bgcolor: (theme) => ( theme.palette.mode === 'dark' ? '#333643' : '#ebecf0' ),
+            ml: 2,
+            borderRadius: "6px",
+            height: "fit-content",
+            maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(5)})`
+          }}>
         <Box sx={{
-          height: (theme)=>theme.trello.columnHeaderHeight,
+          height: (theme) => theme.trello.columnHeaderHeight,
           p: 2,
           display: "flex",
           justifyContent: "space-between",
@@ -38,7 +62,8 @@ const Column = () => {
             fontSize: '1rem',
             fontWeight: 'bold',
             cursor: "pointer"
-          }}>Column Type</Typography>
+          }}>{column?.title}
+          </Typography>
           <Box>
             <Tooltip title="More option" arrow disableInteractive>
               <ExpandMoreIcon
@@ -99,9 +124,9 @@ const Column = () => {
             </Menu>
           </Box>
         </Box>
-        <ListCards/>
+        <ListCards cards={orderedCard}/>
         <Box sx={{
-          height: (theme)=>theme.trello.columnFooterHeight,
+          height: (theme) => theme.trello.columnFooterHeight,
           p: 2,
           display: "flex",
           justifyContent: "space-between",
